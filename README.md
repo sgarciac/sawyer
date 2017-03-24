@@ -3,7 +3,7 @@ A Common Lisp lisp parser for [TOML](https://github.com/toml-lang/toml), fully s
 
 Sawyer depends on the following parsing libraries, which are unfortunately not in quicklisp, so you might want to install them by hand (cloning them in the folder "local-projects" inside your quicklisp directory will do).
 
- * [re] (https://github.com/massung/re)
+ * [re](https://github.com/massung/re)
  * [lexer](https://github.com/massung/lexer)
  * [parse](https://github.com/massung/parse)
 
