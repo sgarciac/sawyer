@@ -2,13 +2,6 @@
 ;;; how to support all numerical identifier?
 ;;; leading zeros in integer is not allowed
 ;;;
-;;; errors in fbernier:
-;;;
-;;; pepe = "wha\qever" should choke!
-;;; 1234 = "asdasd" should be valid!
-;;; pepe = 45_
-;;; integers should not accept leading spaces
-;;; Todo in sergio:
 ;;; sanitize integer? should accept leading spaces
 (in-package #:sawyer)
 
@@ -42,7 +35,7 @@
   ("(%d%d%d%d)%-(%d%d)%-(%d%d)(T(%d%d):(%d%d):(%d%d)(%.%d+)?)?(Z|((%+|%-)(%d%d):(%d%d)))?"
    (pop-lexer s :date $$))
   ;; Numbers
-  ("([+-])?((%d_)|(_%d)|%d)+(%.((%d_)|(_%d)|%d)+)?([Ee]([+-])?((%d_)|(_%d)|%d)+)?" (pop-lexer s :number (let ((*read-default-float-format* 'double-float))(parse-number $$))))
+  ("([+-])?%d(_%d|%d)*(%.%d(_%d|%d)*)?([Ee]([+-])?%d(_%d|%d)*)?" (pop-lexer s :number (let ((*read-default-float-format* 'double-float))(parse-number (remove #\_ $$)))))
   ;; Strings
   ("'''%n?"
    (progn
@@ -76,8 +69,8 @@
   ("(%d%d%d%d)%-(%d%d)%-(%d%d)(T(%d%d):(%d%d):(%d%d)(%.%d+)?)?(Z|((%+|%-)(%d%d):(%d%d)))?"
    (values :date $$))
   ;; Numbers
-  ("([+-])?((%d_)|(_%d)|%d)+(%.((%d_)|(_%d)|%d)+)?([Ee]([+-])?((%d_)|(_%d)|%d)+)?"
-   (values :number (let ((*read-default-float-format* 'double-float))(parse-number $$))))
+  ("([+-])?%d((_%d)|%d)*(%.%d((_%d)|%d)*)?([Ee]([+-])?%d((_%d)|%d)*)?"
+   (values :number (let ((*read-default-float-format* 'double-float))(parse-number (remove #\_ $$)))))
   ;; Strings
   ("'''%n?"
    (push-lexer s #'multi-line-literal-string-lexer :multi-line-literal-string))

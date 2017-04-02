@@ -10,7 +10,8 @@ Sawyer depends on the following parsing libraries, which are unfortunately not i
 Usage:
 
 ```commonlisp
-(sawyer:parse-toml-string "a=1") ; => (:OBJ ("a" . 1))
+(sawyer:parse-toml-string "whatever = {a = [1,2,3]}")  ; => (:OBJ ("whatever"
+:OBJ ("a" . #(1 2 3)))) 
 ```
  
 
