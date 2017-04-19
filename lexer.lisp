@@ -32,8 +32,18 @@
   ;; space
   ("%s+" :next-token)
   ;; Dates
-  ("(%d%d%d%d)%-(%d%d)%-(%d%d)(T(%d%d):(%d%d):(%d%d)(%.%d+)?)?(Z|((%+|%-)(%d%d):(%d%d)))?"
-   (pop-lexer s :date $$))
+  ;; offset date-time
+  ("(%d%d%d%d)%-(%d%d)%-(%d%d)(T(%d%d):(%d%d):(%d%d)(%.%d+)?)(Z|((%+|%-)(%d%d):(%d%d)))"
+   (pop-lexer s :offset-date-time $$))
+  ;; local date-time
+  ("(%d%d%d%d)%-(%d%d)%-(%d%d)T(%d%d):(%d%d):(%d%d)(%.%d+)?"
+   (values :local-date-time $$))
+  ;; local date
+  ("(%d%d%d%d)%-(%d%d)%-(%d%d)"
+   (values :local-date $$))
+  ;; local time
+  ("(%d%d):(%d%d):(%d%d)(%.%d+)?"
+   (values :local-time $$))
   ;; Numbers
   ("([+-])?%d(_%d|%d)*(%.%d(_%d|%d)*)?([Ee]([+-])?%d(_%d|%d)*)?" (pop-lexer s :number (let ((*read-default-float-format* 'double-float))(parse-number (remove #\_ $$)))))
   ;; Strings
@@ -66,8 +76,19 @@
   ;; comma separates values inside an array
   ("," :comma)
   ;; Dates
-  ("(%d%d%d%d)%-(%d%d)%-(%d%d)(T(%d%d):(%d%d):(%d%d)(%.%d+)?)?(Z|((%+|%-)(%d%d):(%d%d)))?"
-   (values :date $$))
+  ;; Dates
+  ;; offset date-time
+  ("(%d%d%d%d)%-(%d%d)%-(%d%d)(T(%d%d):(%d%d):(%d%d)(%.%d+)?)(Z|((%+|%-)(%d%d):(%d%d)))"
+   (pop-lexer s :offset-date-time $$))
+  ;; local date-time
+  ("(%d%d%d%d)%-(%d%d)%-(%d%d)T(%d%d):(%d%d):(%d%d)(%.%d+)?"
+   (values :local-date-time $$))
+  ;; local date
+  ("(%d%d%d%d)%-(%d%d)%-(%d%d)"
+   (values :local-date $$))
+  ;; local time
+  ("(%d%d):(%d%d):(%d%d)(%.%d+)?"
+   (values :local-time $$))
   ;; Numbers
   ("([+-])?%d((_%d)|%d)*(%.%d((_%d)|%d)*)?([Ee]([+-])?%d((_%d)|%d)*)?"
    (values :number (let ((*read-default-float-format* 'double-float))(parse-number (remove #\_ $$)))))

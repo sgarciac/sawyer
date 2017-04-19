@@ -8,7 +8,7 @@
 ;;;
 ;;; 1. A toml table
 ;;; 2. An integer
-;;; 3. A datetime
+;;; 3. A datetime (offset-datetime, local-datetime, local-date, local-time)
 ;;; 4. A list of values
 ;;; 5. A toml table array
 ;;; 6. A boolean
@@ -159,7 +159,7 @@ names. Create the new array table if necessary."
   (let ((key (toml-string-value (toml-key-value-entry-key kv)))
         (val (toml-key-value-entry-value kv)))
     (typecase val
-      ((or toml-integer toml-float toml-boolean toml-string toml-datetime) (add-binding table key val))
+      ((or toml-integer toml-float toml-boolean toml-string toml-offset-datetime toml-local-datetime toml-local-date toml-local-time) (add-binding table key val))
       (toml-array-entry (add-binding table key (toml-array-entry-to-value val)))
       (toml-inline-table-entry (add-binding table key (toml-inline-table-entry-to-value val))))))
 
@@ -179,7 +179,7 @@ names. Create the new array table if necessary."
            for element in (cdr entries)
            when (not (eq (type-of element) type)) do (Error "Values in an array must be of the same type ~A ~A" (type-of element) type))
         (typecase (first entries)
-          ((or toml-integer toml-float toml-boolean toml-string toml-datetime)
+          ((or toml-integer toml-float toml-boolean toml-string toml-offset-datetime toml-local-datetime toml-local-date toml-local-time)
            entries)
           (toml-array-entry (mapcar #'toml-array-entry-to-value entries))
           (toml-inline-table-entry
@@ -221,7 +221,7 @@ names. Create the new array table if necessary."
     (toml-integer `(:obj ("type" . "integer") ("value" . ,(write-to-string (toml-integer-value value)))) )
     (toml-float `(:obj ("type" . "float") ("value" . ,(format nil "~f" (toml-float-value value)))) )
     (toml-boolean `(:obj ("type" . "bool") ("value" .  ,(if (toml-boolean-value value) "true" "false"))))
-    (toml-datetime `(:obj ("type" . "datetime") ("value" .  ,(toml-datetime-original-value value))))
+    ((or toml-offset-datetime toml-local-datetime toml-local-date toml-local-time) `(:obj ("type" . "datetime") ("value" .  ,(toml-datetime-original-value value))))
     (list `(:obj ("type" . "array") ("value" . ,(mapcar #'toml-object-to-jsownable value))))
     (toml-table
      `(:obj
