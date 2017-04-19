@@ -201,7 +201,10 @@ names. Create the new array table if necessary."
     (toml-integer (toml-integer-value value))
     (toml-float (toml-float-value value))
     (toml-boolean (toml-boolean-value value))
-    (toml-datetime (toml-datetime-value value))
+    (toml-offset-datetime (toml-offset-datetime-original-value value))
+    (toml-local-datetime (toml-local-datetime-original-value value))
+    (toml-local-time (toml-local-time-original-value value))
+    (toml-local-date (toml-local-date-original-value value))
     (list (let ((list (mapcar #'toml-object-to-lisp value)))
             (make-array (length list) :initial-contents list)))
     (toml-table
@@ -221,7 +224,10 @@ names. Create the new array table if necessary."
     (toml-integer `(:obj ("type" . "integer") ("value" . ,(write-to-string (toml-integer-value value)))) )
     (toml-float `(:obj ("type" . "float") ("value" . ,(format nil "~f" (toml-float-value value)))) )
     (toml-boolean `(:obj ("type" . "bool") ("value" .  ,(if (toml-boolean-value value) "true" "false"))))
-    ((or toml-offset-datetime toml-local-datetime toml-local-date toml-local-time) `(:obj ("type" . "datetime") ("value" .  ,(toml-datetime-original-value value))))
+    (toml-offset-datetime `(:obj ("type" . "datetime") ("value" .  ,(toml-offset-datetime-original-value value))))
+    (toml-local-datetime `(:obj ("type" . "local-datetime") ("value" .  ,(toml-local-datetime-original-value value))))
+    (toml-local-time `(:obj ("type" . "local-time") ("value" .  ,(toml-local-time-original-value value))))
+    (toml-local-date `(:obj ("type" . "local-date") ("value" .  ,(toml-local-date-original-value value))))
     (list `(:obj ("type" . "array") ("value" . ,(mapcar #'toml-object-to-jsownable value))))
     (toml-table
      `(:obj

@@ -17,10 +17,10 @@
 (defstruct toml-float value)
 (defstruct toml-string value type) ;  :bare :literal :regular :literal-ml, :regular-ml
 (defstruct toml-boolean value) ;  :bare :literal :regular :literal-ml, :regular-ml
-(defstruct toml-offset-datetime value original-value)
-(defstruct toml-local-datetime value original-value)
-(defstruct toml-local-date value original-value)
-(defstruct toml-local-time value original-value)
+(defstruct toml-offset-datetime original-value)
+(defstruct toml-local-datetime original-value)
+(defstruct toml-local-date original-value)
+(defstruct toml-local-time original-value)
 
 
 (defun str-concat (list)
@@ -118,13 +118,13 @@
           (make-toml-integer :value value)
           (make-toml-float :value value))))
    (.let* ((value (.is :offset-date-time)))
-     (.ret (make-toml-offset-datetime :value (local-time:parse-timestring value) :original-value value)))
+     (.ret (make-toml-offset-datetime :original-value value)))
    (.let* ((value (.is :local-date-time)))
-     (.ret (make-local-datetime :value (local-time:parse-timestring value) :original-value value)))
+     (.ret (make-local-datetime :original-value value)))
    (.let* ((value (.is :local-date)))
-     (.ret (make-toml-local-date :value (local-time:parse-timestring value) :original-value value)))
+     (.ret (make-toml-local-date :original-value value)))
    (.let* ((value (.is :time)))
-     (.ret (make-toml-local-time :value (local-time:parse-timestring (format nil "0000-00-00T~A" value)) :original-value value)))
+     (.ret (make-toml-local-time :original-value value)))
    (.let* ((value (.is :true)))
      (.ret (make-toml-boolean :value t)))
    (.let* ((value (.is :false)))

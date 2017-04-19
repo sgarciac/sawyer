@@ -4,7 +4,7 @@
   :description "A TOML parser"
   :author "Sergio Garcia <sergio.garcia@gmail.com>"
   :license "Artistic"
-  :depends-on (#:lexer #:parse #:parse-number #:re #:alexandria #:local-time)
+  :depends-on (#:lexer #:parse #:parse-number #:re #:alexandria)
   :serial t
   :components ((:file "package")
                (:file "lexer-strings")
