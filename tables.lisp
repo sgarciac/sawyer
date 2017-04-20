@@ -224,6 +224,7 @@ names. Create the new array table if necessary."
     (toml-integer `(:obj ("type" . "integer") ("value" . ,(write-to-string (toml-integer-value value)))) )
     (toml-float `(:obj ("type" . "float") ("value" . ,(format nil "~f" (toml-float-value value)))) )
     (toml-boolean `(:obj ("type" . "bool") ("value" .  ,(if (toml-boolean-value value) "true" "false"))))
+    ;; for offset datetime, we use "datetime" to be compatible with burntsushi's tests
     (toml-offset-datetime `(:obj ("type" . "datetime") ("value" .  ,(toml-offset-datetime-original-value value))))
     (toml-local-datetime `(:obj ("type" . "local-datetime") ("value" .  ,(toml-local-datetime-original-value value))))
     (toml-local-time `(:obj ("type" . "local-time") ("value" .  ,(toml-local-time-original-value value))))
