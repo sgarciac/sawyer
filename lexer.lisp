@@ -37,13 +37,13 @@
    (pop-lexer s :offset-date-time $$))
   ;; local date-time
   ("(%d%d%d%d)%-(%d%d)%-(%d%d)T(%d%d):(%d%d):(%d%d)(%.%d+)?"
-   (values :local-date-time $$))
+   (pop-lexer s :local-date-time $$))
   ;; local date
   ("(%d%d%d%d)%-(%d%d)%-(%d%d)"
-   (values :local-date $$))
+   (pop-lexer s :local-date $$))
   ;; local time
   ("(%d%d):(%d%d):(%d%d)(%.%d+)?"
-   (values :local-time $$))
+   (pop-lexer s :local-time $$))
   ;; Numbers
   ("([+-])?%d(_%d|%d)*(%.%d(_%d|%d)*)?([Ee]([+-])?%d(_%d|%d)*)?" (pop-lexer s :number (let ((*read-default-float-format* 'double-float))(parse-number (remove #\_ $$)))))
   ;; Strings
@@ -76,10 +76,9 @@
   ;; comma separates values inside an array
   ("," :comma)
   ;; Dates
-  ;; Dates
   ;; offset date-time
   ("(%d%d%d%d)%-(%d%d)%-(%d%d)(T(%d%d):(%d%d):(%d%d)(%.%d+)?)(Z|((%+|%-)(%d%d):(%d%d)))"
-   (pop-lexer s :offset-date-time $$))
+   (values :offset-date-time $$))
   ;; local date-time
   ("(%d%d%d%d)%-(%d%d)%-(%d%d)T(%d%d):(%d%d):(%d%d)(%.%d+)?"
    (values :local-date-time $$))
@@ -125,4 +124,5 @@
   ("$" (error "Unterminated inline table"))
   )
 
-;;(tokenize #'toml-lexer (slurp "input"))
+;;
+(tokenize #'toml-lexer (slurp "input"))
