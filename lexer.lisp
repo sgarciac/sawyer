@@ -125,4 +125,4 @@
   )
 
 ;;
-(tokenize #'toml-lexer (slurp "input"))
+                                        ;(tokenize #'toml-lexer (slurp "input"))
