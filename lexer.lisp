@@ -47,7 +47,7 @@
   ("(%d%d):(%d%d):(%d%d)(%.%d+)?"
    (pop-lexer s :local-time $$))
   ;; Numbers
-  ("([+-])?%d(_%d|%d)*(%.%d(_%d|%d)*)?([Ee]([+-])?%d(_%d|%d)*)?" (pop-lexer s :number (let ((*read-default-float-format* 'double-float))(parse-number (remove #\_ $$)))))
+  ("([+-])?(([1-9](_%d|%d)*)|0)(%.%d(_%d|%d)*)?([Ee]([+-])?%d(_%d|%d)*)?" (pop-lexer s :number (let ((*read-default-float-format* 'double-float))(parse-number (remove #\_ $$)))))
   ;; Strings
   ("'''%n?"
    (progn
@@ -91,7 +91,7 @@
   ("(%d%d):(%d%d):(%d%d)(%.%d+)?"
    (values :local-time $$))
   ;; Numbers
-  ("([+-])?%d((_%d)|%d)*(%.%d((_%d)|%d)*)?([Ee]([+-])?%d((_%d)|%d)*)?"
+  ("([+-])?(([1-9](_%d|%d)*)|0)(%.%d((_%d)|%d)*)?([Ee]([+-])?%d((_%d)|%d)*)?"
    (values :number (let ((*read-default-float-format* 'double-float))(parse-number (remove #\_ $$)))))
   ;; Strings
   ("'''%n?"
