@@ -26,6 +26,8 @@
   ("%[" :bracket-open)
   ("%]" :bracket-close)
   ("%." :dot)
+  ;; comment at the end of the file
+  ("#.*" :next-token)
   )
 
 (define-lexer toml-value-lexer (s)
