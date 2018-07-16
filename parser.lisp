@@ -29,13 +29,16 @@
 
 (define-parser toml-document-parser
   "Parse a TOML document (as produced by the lexer)"
-  (.let* ((body (.many
+  (.let* ((body (.sep-by
                  (.or
                   'toml-table-header-entry-parser
                   'toml-array-table-header-entry-parser
                   'toml-key-value-entry-parser
-                  ))))
+                  )
+                 (.is :newline)
+                 )))
     (.do
+     (.skip-many (.is :newline))
      (.eof)
      (.ret body))))
 

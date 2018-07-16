@@ -10,7 +10,7 @@
 (define-lexer toml-lexer (s)
   ;; Spaces and comments
   ("%s+" :next-token)
-  ("%n+" :next-token)
+  ("%n+" (values :newline))
   ("#.-%n" :next-token)
   ;; bare keyword
   ("[%d%a_-]+" (values :bare-keyword $$))
