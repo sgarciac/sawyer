@@ -11,7 +11,7 @@
   ;; Spaces and comments
   ("%s+" :next-token)
   ("%n+" (values :newline))
-  ("#.-%n" :next-token)
+  ("#[^%n]*" :next-token)
   ;; bare keyword
   ("[%d%a_-]+" (values :bare-keyword $$))
   ;; basic strings
