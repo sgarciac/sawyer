@@ -10,10 +10,8 @@
   ("\\b" (values :chars #\backspace))
   ("\\n" (values :chars #\newline))
   ("\\r" (values :chars #\return))
-  ("\\u(%x%x%x%x)" (let ((n (parse-integer $1 :radix 16)))
-                     (values :chars (code-char n))))
-  ("\\U(%x%x%x%x%x%x%x%x)" (let ((n (parse-integer $1 :radix 16)))
-                             (values :chars (code-char n))))
+  ("\\u(%x%x%x%x)" (values :chars (parse-to-unicode $1)))
+  ("\\U(%x%x%x%x%x%x%x%x)" (values :chars (parse-to-unicode $1)))
   ("[^\\\"%n]+" (values :chars $$))
   ("$" (error "Unterminated string")))
 
@@ -29,10 +27,8 @@
   ("\\b" (values :chars #\backspace))
   ("\\n" (values :chars #\newline))
   ("\\r" (values :chars #\return))
-  ("\\u(%x%x%x%x)" (let ((n (parse-integer $1 :radix 16)))
-                     (values :chars (code-char n))))
-  ("\\U(%x%x%x%x%x%x%x%x)" (let ((n (parse-integer $1 :radix 16)))
-                             (values :chars (code-char n))))
+  ("\\u(%x%x%x%x)" (parse-to-unicode $1))
+  ("\\U(%x%x%x%x%x%x%x%x)" (parse-to-unicode $1))
   ("[^\\\"]+" (values :chars $$))
   ("$" (error "unterminated string")))
 
@@ -45,3 +41,15 @@
   ("[^']+" (values :chars $$))
   ;; don't reach the end of file or line
   ("$" (error "unterminated string")))
+
+;; parse to unicode
+(defun parse-to-unicode (str)
+  (let ((scalar (parse-integer str :radix 16)))
+    (if  (or
+          (and (>= scalar 0)
+               (<= scalar #xD7FF))
+          (and (>= scalar #xE000)
+               (<= scalar #x10FFFF)))
+         (code-char scalar)
+         (error "not a valid unicode scalar value")
+         )))
