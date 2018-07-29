@@ -125,7 +125,7 @@
    (.let* ((value (.is :offset-date-time)))
      (.ret (make-toml-offset-datetime :original-value value)))
    (.let* ((value (.is :local-date-time)))
-     (.ret (make-local-datetime :original-value value)))
+     (.ret (make-toml-local-datetime :original-value value)))
    (.let* ((value (.is :local-date)))
      (.ret (make-toml-local-date :original-value value)))
    (.let* ((value (.is :local-time)))
