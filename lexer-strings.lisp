@@ -18,7 +18,7 @@
 ;;; Multi line string within """s
 (define-lexer multi-line-string-lexer (s)
   ("\"\"\"" (pop-lexer s :multi-line-string))
-  ("\\%n[%s%n]*" :next-token)
+  ("\\%s*%n[%s%n]*" :next-token)
   ("\"" (values :chars #\"))
   ("\\t" (values :chars #\tab))
   ("\\\\" (values :chars #\\))
