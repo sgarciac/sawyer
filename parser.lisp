@@ -128,7 +128,7 @@
      (.ret (make-local-datetime :original-value value)))
    (.let* ((value (.is :local-date)))
      (.ret (make-toml-local-date :original-value value)))
-   (.let* ((value (.is :time)))
+   (.let* ((value (.is :local-time)))
      (.ret (make-toml-local-time :original-value value)))
    (.let* ((value (.is :true)))
      (.ret (make-toml-boolean :value t)))
