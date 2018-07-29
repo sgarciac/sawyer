@@ -35,10 +35,10 @@
   ("%s+" :next-token)
   ;; Dates
   ;; offset date-time
-  ("(%d%d%d%d)%-(%d%d)%-(%d%d)(T(%d%d):(%d%d):(%d%d)(%.%d+)?)(Z|((%+|%-)(%d%d):(%d%d)))"
+  ("(%d%d%d%d)%-(%d%d)%-(%d%d)((T|t| )(%d%d):(%d%d):(%d%d)(%.%d+)?)(Z|((%+|%-)(%d%d):(%d%d)))"
    (pop-lexer s :offset-date-time $$))
   ;; local date-time
-  ("(%d%d%d%d)%-(%d%d)%-(%d%d)T(%d%d):(%d%d):(%d%d)(%.%d+)?"
+  ("(%d%d%d%d)%-(%d%d)%-(%d%d)(T|t| )(%d%d):(%d%d):(%d%d)(%.%d+)?"
    (pop-lexer s :local-date-time $$))
   ;; local date
   ("(%d%d%d%d)%-(%d%d)%-(%d%d)"
@@ -79,10 +79,10 @@
   ("," :comma)
   ;; Dates
   ;; offset date-time
-  ("(%d%d%d%d)%-(%d%d)%-(%d%d)(T(%d%d):(%d%d):(%d%d)(%.%d+)?)(Z|((%+|%-)(%d%d):(%d%d)))"
+  ("(%d%d%d%d)%-(%d%d)%-(%d%d)((T|t| )(%d%d):(%d%d):(%d%d)(%.%d+)?)(Z|((%+|%-)(%d%d):(%d%d)))"
    (values :offset-date-time $$))
   ;; local date-time
-  ("(%d%d%d%d)%-(%d%d)%-(%d%d)T(%d%d):(%d%d):(%d%d)(%.%d+)?"
+  ("(%d%d%d%d)%-(%d%d)%-(%d%d)(T|t| )(%d%d):(%d%d):(%d%d)(%.%d+)?"
    (values :local-date-time $$))
   ;; local date
   ("(%d%d%d%d)%-(%d%d)%-(%d%d)"
